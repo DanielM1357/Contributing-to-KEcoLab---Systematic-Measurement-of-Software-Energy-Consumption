@@ -42,3 +42,5 @@ ydotool type "ls" && ydotool key 28:1 28:0
 ```
 
 This types "ls" to the command-line and key does press keys - 28 stands for enter, 0 is release and 1 is press.
+
+A keymap where all keys are described can be found in `/usr/include/linux/input-event-codes.h`.
