@@ -7,11 +7,41 @@
 **[AT-SPI2](https://www.freedesktop.org/wiki/Accessibility/AT-SPI2/?__goaway_challenge=meta-refresh&__goaway_id=19ee1302882ecd1a45f3a544fe70e82f)** A protocol over DBus, which GUI toolkit widgets use to provide their content to screen readers.
 
 ## Installing Dependencies 
-- A supported `python3` version (at the time of writing >=3.7 (This page was last edited on 25 September 2025, at 09:19.))
+Some or most of the following packages might already being installed on the fedora distro, but to make sure, run the install commands through your package manger.
+```bash
+sudo dnf install \ 
+at-spi2-core \ 
+python3-pyatspi \ 
+accerciser \ 
+gobject-introspection
+```
+- A supported `python3` version (at the time of writing >=3.7 ("This page was last edited on 25 September 2025, at 09:19."))
 - https://gitlab.gnome.org/GNOME/at-spi2-core
 - https://gitlab.gnome.org/GNOME/pyatspi2
 - https://gitlab.gnome.org/GNOME/accerciser
 - https://gitlab.gnome.org/GNOME/gobject-introspection
+
+These dependencies need to be installed in order to be able to build `selenium-webdriver-at-spi` in the next steps:
+
+```bash
+sudo dnf install \ 
+extra-cmake-modules \ 
+qt6-qtbase-devel \ 
+qt6-qtbase-private-devel \ 
+qt6-qtdeclarative-devel \ 
+kf6-kwindowsystem-devel \ 
+kwayland-devel \ 
+kpipewire-devel \ 
+kwin-devel \ 
+wayland-devel
+```
+
+Installing python dependecies:
+```bash
+sudo dnf install \ 
+python3-pyatspi \ 
+python3-gobject
+```
 
 ## Installing Selenium-webdriver-AT-SPI
 ```bash
@@ -37,12 +67,11 @@ For us the **best choice is Python** as most devs are familiar with it and the K
 
 ### Creating a Test Class
 Import the necessary libraries so Selenium and Appium works.
->TODO: Need to check if importing unittest twice is a mistake in the original doc.
+>TODO: Ask if we should use unittest, or pytest, or something other.
 
 (The body of the class will be filled in the next part)
 
 ```python
-import unittest
 import unittest
 from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
