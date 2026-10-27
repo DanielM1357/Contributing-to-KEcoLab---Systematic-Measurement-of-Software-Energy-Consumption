@@ -16,6 +16,16 @@ Some or most of the following packages might already being installed on the fedo
 - https://gitlab.gnome.org/GNOME/accerciser
 - https://gitlab.gnome.org/GNOME/gobject-introspection
 
+or
+
+```bash
+sudo dnf install \
+at-spi2-core \
+python3-pyatspi \
+accerciser \
+gobject-introspection
+```
+
 Installing python and dependencies to be able to create a python venv as well as to be able to run the selenium compiler.
 ```bash
 sudo dnf install \
@@ -25,8 +35,19 @@ python3-pyatspi \
 python3-pyatspi \
 python3-gobject \
 at-spi2-core \
-accerciser
+accerciser \
+cairo-devel
 ```
+
+Additionally for being able to install PyGObject, which is in `requirements.txt`, execute:
+```bash
+sudo dnf install gcc \
+gobject-introspection-devel \
+cairo-gobject-devel \
+pkg-config python3-devel \
+gtk4
+```
+[pygobject.gnome.org](https://pygobject.gnome.org/getting_started.html#gettingstarted)
 
 These dependencies need to be installed in order to be able to build `selenium-webdriver-at-spi` in the next steps:
 
@@ -61,16 +82,16 @@ make
 sudo make install
 cd ..
 ```
-Now that selinium is built, it can be used to run tests.
+Now that Selenium is built, it can be used to run tests.
 
 ## Running Selenium Tests
 If you're running your tests inside a VM, make sure to set it up properly.
 In this case we are using `QEMU/KVM` V**irtual Machine Manager**.
 
 In the VM's settings go to the **video** tab and make sure the `Mode` is set to `Virtio` and that `3D acceleration` is checked. \
-Than under **Display Spice** make sure the `OpenGL` is checked and listen type is set to `None`.
+Then under **Display Spice** make sure `OpenGL` is checked and listen type is set to `None`.
 
-Now that the VM is set up, you will be able to run the Selenium tests. \
+Now that the VM is set up and after rebooting the guest machine, you will be able to run the Selenium tests. \
 To test if it works you can run the example test by using the following command from the selenium folder.
 ```bash
 selenium-webdriver-at-spi-run ./examples/calculatortest.py
