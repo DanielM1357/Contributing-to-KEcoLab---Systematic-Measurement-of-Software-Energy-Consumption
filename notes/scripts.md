@@ -27,6 +27,17 @@ For running the system usage scenario, the configuration of the following key-sh
 - Fit to width: Ctrl+Shift+w
 - Single page mode: Ctrl+Alt+s
 
-The lines until the main for-loop are basically the same as in the idle script. For simulating the usage, a PDF-file is needed, which is checked during the script at the beginning, and downloaded, if the file is not existing. 
+Also make shure that ydotool is running, 
 
+The lines until the main for-loop are basically the same as in the idle script. For simulating the usage, a PDF-file is needed. The path of this file is checked during the script at the beginning, and downloaded, if the file is not existing. 
+As the for loop starts, the pdf gets copied to the home directory: 
 
+```bash
+cp ~/Documents/okular/20yearsofKDE.pdf ~/Documents/20yearsofKDE
+```
+
+After copying the file and a wait time of 60s the file gets opened with:
+```bash
+flatpak run org.kde.okular ~/Documents/20yearsofKDE > /dev/null 2>&1 &
+```
+`/dev/null 2>&1 &`suspends the output, so no output is given to the command line.
