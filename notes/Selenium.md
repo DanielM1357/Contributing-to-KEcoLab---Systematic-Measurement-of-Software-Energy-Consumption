@@ -71,7 +71,7 @@ ruby
 git clone https://invent.kde.org/sdk/selenium-webdriver-at-spi.git
 cd selenium-webdriver-at-spi
 # For virtual environment
-python3 -m venv venv
+python3 -m venv --system-site-packages venv
 source venv/bin/activate
 pip3 install -r requirements.txt
 echo export PATH="~/.local/bin:$PATH" >> ${HOME}/.bashrc
