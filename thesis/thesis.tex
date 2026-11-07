@@ -29,6 +29,13 @@
         \subsection{ydotool, kdotool and xdotool - Actual problems}
         \textbf{How does ydotool work? Pros, Cons?}
 
+        \subsection{The scripting scenarios}
+        \textbf{Description of the scenarios, what are the steps, which are done}
+
+        \subsubsection{Baseline scenario}
+        \subsubsection{Idle Scenario}
+        \subsubsection{System Usage Scenario}
+
         \subsection{Setting up the environment}
         \textbf{What is the working setup generally?}
         \subsubsection{Fedora VM with KDE Plasma}
@@ -74,7 +81,47 @@
 
         A keymap where all keys are described can be found in `/usr/include/linux/input-event-codes.h`.
 
+        \textbf{!!!MISSING KDOTOOL!!!}
+        \newline
+
         \subsection{Run the project locally and test the scripts}
+        Now that the VM is setup and ydotool/kdotool are installed, it can be tried to run the actual scripts. As the script of Okular is the only script, which is working, those will be run. First, the KEcoLab repository has to be cloned locally by using:
+        \begin{lstlisting}
+         git clone https://invent.kde.org/sdk/kecolab.git
+        \end{lstlisting}
+        This will create the project folder, in order to be able to access the scripts. These are stored in `scripts/test\textunderscore scripts/org.kde.okular`. The folder contains three scripting files, one for each scenario.
+        To be able to run the scripts you need the flatpak version of the application. As this script is now for Okular, the `org.kde.okular` package
+        needs to be installed by running `flatpak install org.kde.okular`.
+        If not installed, the script is not able to start the application.
+        Also the scripts have to be executable, which is done by `chmod u+x $<$file-name$>$`. After these steps the script can be started and will run.
+        For example starting the idle script would be `./log\textunderscore idle.sh`
+
+        The scripts have principially the same structure until it comes to the testing for-loop. Each one has a syncUp-function defined, which sets sleep for the given time.
+        `startAction()` and `stopAction()` will log the exact time of each action's start and stop to `~/log\textunderscore usage\textunderscore scenario`, as each action is wrapped with both functions. These functions are only defined in sus and idle scenario, as with baseline-scenario it's not needed.
+        \subsubsection{Baseline scenario}
+        This scenario is the most simple one, as there's not application started or anything else done, than logging the time of each iteration's start/end and waiting for 218s (including burn-in time of 60s and cooldown of 30s)
+        \subsubsection{Idle Scenario}
+        The idle scenario additionally contains the start of the application. Furthermore it will let Okular run for 220 seconds and then close it, which makes the scenario of the plain application running, with no actions done.
+        \subsubsection{System usage Scenario}
+        For running the system usage scenario, the configuration of the following key-shortcuts have to be made, as ydotool does many operations using shortkeys:
+        \begin{itemize}
+         \item Rotate Left: Ctrl+l
+         \item Rotate Right: Ctrl+r
+         \item Invert color: Ctrl+i
+         \item Fit to width: Ctrl+Shift+w
+         \item Single page mode: Ctrl+Alt+s
+        \end{itemize}
+        Also make shure that ydotool is running.
+        The lines until the main for-loop are basically the same as in the idle script. For simulating the usage, a PDF-file is needed. The path of this file is checked during the script at the beginning, and downloaded, if the file is not existing. As the for loop starts, the pdf gets copied to the home directory:
+        \begin{lstlisting}
+         cp ~/Documents/okular/20yearsofKDE.pdf ~/Documents/20yearsofKDE
+        \end{lstlisting}
+        After copying the file and a wait time of 60s the file gets opened with:
+        \begin{lstlisting}
+         flatpak run org.kde.okular ~/Documents/20yearsofKDE > /dev/null 2>&1 &
+        \end{lstlisting}
+        `/dev/null 2$>$\&1 \&`suspends the output, so no output is given to the command line.
+
         \subsection{Change the source code and perform a merge request}
         \subsection{Introduction to the project and topic}
 
