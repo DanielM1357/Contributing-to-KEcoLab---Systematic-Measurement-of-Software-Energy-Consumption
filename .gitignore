@@ -1,3 +1,5 @@
 *.aux
 *.pdf
 *.log
+chapter_1.tex
+*kate-swp
