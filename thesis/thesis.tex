@@ -129,7 +129,27 @@
         \textbf{What are the benefits compared to the actual scripts?Would there be other solutions/frameworks? Etc...}
 
         \subsection{Setting up Selenium AT2-SPI}
-        \subsubsection{How does it work}
+
+
+        \subsubsection{Using already existing Selenium scripts}
+        Given an KDE-repository containing Selenium tests scripts for KDE Linux with OpenQA, it will be checked, if these scripts are of any further use for the current project.
+        The repository https://invent.kde.org/kde-linux/os-autoinst-distri-kdelinux/-/tree/master/tests has the following structure:
+        \begin{lstlisting}
+         tests/
+            common/
+            kdelinux/
+            kdelinux-live/
+        \end{lstlisting}
+        Each folder contains tests for different cases. The repository defines three test suites:
+        \begin{itemize}
+         \item install-system
+         \item upgrade-system
+         \item sanity-test
+        \end{itemize}
+        Each test-suite contains multiple tests.
+
+        Follow steps from \#\# Run tests locally - install podman-compose
+
 
 %     \section{Transfer scripts to the target framework Selenium for each application and test-case}
 %         \subsection{Baseline, Idle, Standard Usage Scenario}
