@@ -1,5 +1,9 @@
 *.aux
 *.pdf
 *.log
+*.toc
+*.fls
+*.synctex.gz
+*.fdb_latexmk
 chapter_1.tex
 *kate-swp

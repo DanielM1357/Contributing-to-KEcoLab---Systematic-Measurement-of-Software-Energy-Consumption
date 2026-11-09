@@ -1,5 +1,77 @@
 \documentclass{article}
 \usepackage{listings}
+\usepackage{xcolor}
+\usepackage{inconsolata} % Modern monospace font
+
+% === Basic Syntax Highlighting ===
+
+% \definecolor{codegreen}{rgb}{0,0.6,0}
+% \definecolor{codekeyword}{rgb}{0.86,0.24,0.62}
+% \definecolor{codegray}{rgb}{0.5,0.5,0.5}
+% \definecolor{codepurple}{rgb}{0.58,0,0.82}
+% \definecolor{codebackground}{rgb}{0.95,0.95,0.92}
+
+% \lstdefinestyle{mystyle}{
+%     backgroundcolor=\color{codebackground},   
+%     commentstyle=\color{codegreen},
+%     keywordstyle=\color{codekeyword},
+%     numberstyle=\tiny\color{codegray},
+%     stringstyle=\color{codepurple},
+%     basicstyle=\ttfamily\footnotesize,
+%     breakatwhitespace=false,         
+%     breaklines=true,                 
+%     captionpos=b,                    
+%     keepspaces=true,                 
+%     numbers=left,                    
+%     numbersep=5pt,                  
+%     showspaces=false,                
+%     showstringspaces=false,
+%     showtabs=false,                  
+%     tabsize=2
+% }
+
+% =================================
+
+% --- Tokyo Night Light Palette ---
+\definecolor{tnBackground}{HTML}{e1e2e7}  % Main background
+\definecolor{tnText}{HTML}{343b58}        % Base text / identifiers
+\definecolor{tnComment}{HTML}{9699a3}     % Comments
+\definecolor{tnKeyword}{HTML}{7847bd}     % Keywords (purple)
+\definecolor{tnString}{HTML}{485e30}      % Strings (dark green)
+\definecolor{tnFunction}{HTML}{0f4b6e}    % Functions / Methods (blue)
+\definecolor{tnNumber}{HTML}{8c4351}      % Numbers / Constants (red/burgundy)
+\definecolor{tnOperator}{HTML}{005af0}    % Operators (cyan/blue)
+\definecolor{tnLineNum}{HTML}{9699a3}     % Line numbers
+
+% --- Define Tokyo Night Light Style ---
+\lstdefinestyle{tokyonight-light}{
+    backgroundcolor=\color{tnBackground},
+    basicstyle=\ttfamily\small\color{tnText},
+    commentstyle=\color{tnComment}\itshape,
+    keywordstyle=\color{tnKeyword}\bfseries,
+    stringstyle=\color{tnString},
+    numberstyle=\tiny\color{tnLineNum},
+    identifierstyle=\color{tnText},
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=10pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    frame=single,
+    rulecolor=\color{tnBackground},
+    framerule=0pt,
+    framexleftmargin=6pt,
+    framexrightmargin=6pt,
+    framextopmargin=6pt,
+    framexbottommargin=6pt
+}
+
+\lstset{style=tokyonight-light}
 
 \title{Contributing to KDEEcoLab - Systematic Measurement of Software Energy Consumption}
 
@@ -124,12 +196,117 @@
 
         \subsection{Change the source code and perform a merge request}
 
+    \newpage
     \section{Selenium}
         \subsection{Why Selenium?}
-        \textbf{What are the benefits compared to the actual scripts?Would there be other solutions/frameworks? Etc...}
+        \textbf{What are the benefits compared to the actual scripts? 
+        Would there be other solutions/frameworks? Etc...}
 
-        \subsection{Setting up Selenium AT2-SPI}
+        \subsection{Setting up Selenium}
+        As Selenium is designed to work and test within web browsers, our setup 
+        needs some extra components.\\
+        Thankfully we already have a solution in the form of KDE's "at-spi" 
+        accessability api.
 
+        \subsubsection{Overwiew}
+        \textbf{Selenium} A Browser automation framework.\\
+        \textbf{Driver} The server component of Selenium.\\
+        \textbf{Appium} An extension to Selenium making it more useful for app 
+        testing.\\
+        \textbf{AT-SPI2} A protocol over DBus, which GUI toolkit widgets use to 
+        provide their content to screen readers.\\
+
+        \subsubsection{Installing Dependencies}
+        Some or most of the following packages might already been installed on 
+        the fedora distro, but to make sure, we will run the install commands 
+        through our package manger.
+        \begin{itemize}
+            \item a supported Python3 version
+            \item at-spi2
+            \item pyatspi2
+            \item accerciser
+            \item gobject-introspection
+        \end{itemize}
+        We are gonna install these and other dependencies through our package 
+        manager ("DNF" on fedora):
+        \begin{lstlisting}[language=bash]
+            sudo dnf install \
+            at-spi2-core \
+            accerciser \
+            gobject-introspection \
+            python3 \
+            python3-pip \
+            python3-pyatspi \
+            python3-gobject \
+            at-spi2-core \
+            accerciser \
+            cairo-devel
+        \end{lstlisting}
+        Additionally we ar going to need to install the following packages:
+        \begin{lstlisting}[language=bash]
+            sudo dnf install gcc \
+            gobject-introspection-devel \
+            cairo-gobject-devel \
+            pkg-config python3-devel \
+            gtk4
+        \end{lstlisting}
+        Including the following in order to be able to build 
+        "selenium-webdriver-at-spi" in the following steps.
+        \begin{lstlisting}[language=bash]
+            sudo dnf install \
+            extra-cmake-modules \
+            qt6-qtbase-devel \
+            qt6-qtbase-private-devel \
+            qt6-qtdeclarative-devel \
+            kf6-kwindowsystem-devel \
+            plasma-wayland-protocols-devel \
+            kwayland-devel \
+            kpipewire-devel \
+            kwin-devel \
+            wayland-devel \
+            ruby
+        \end{lstlisting}
+        Once we have these packages installed we are now ready to clone and 
+        install selenium.
+
+        \subsubsection{Installing Selenium-webdriver-AT-SPI}
+        \begin{lstlisting}
+            git clone https://invent.kde.org/sdk/selenium-webdriver-at-spi.git
+            cd selenium-webdriver-at-spi
+            # For virtual environment
+            python3 -m venv --system-site-packages venv
+            source venv/bin/activate
+            pip3 install -r requirements.txt
+            echo export PATH="~/.local/bin:$PATH" >> ${HOME}/.bashrc
+            mkdir build
+            cd build
+            cmake ..
+            make
+            sudo make install
+            cd ..
+        \end{lstlisting}
+        Now that Selenium is built, it can be used to run the Selenium-specific test.
+
+        \subsubsection{Running Selenium Tests}
+        If we are running our tests inside a VM -- which we do when working 
+        with the scripts locally --, we make sure to set it up properly.\\
+        In this case we are using QEMU/KVM Virtual Machine Manager.\\
+
+        In the VM's settings, we go to the video tab and make sure 
+        the Mode is set to Virtio and that 3D acceleration is checked.\\
+        Then under Display Spice we need to make sure OpenGL is checked and 
+        listen type is set to None.\\
+
+        Now that the VM is set up and after rebooting the guest machine, we 
+        will be able to run the Selenium tests.
+        In order to test if it works we can run the example test by using the 
+        following command from the selenium folder.
+
+        \begin{lstlisting}
+            selenium-webdriver-at-spi-run ./examples/calculatortest.py
+        \end{lstlisting}
+        If everything is working correctly, a window will open in which the 
+        KCalc app will open and the test will run.
 
         \subsubsection{Using already existing Selenium scripts}
         Given an KDE-repository containing Selenium tests scripts for KDE Linux with OpenQA, it will be checked, if these scripts are of any further use for the current project.
