@@ -1,5 +1,12 @@
+node_modules/
+build/
+examples/
+test/
+
 *.aux
 *.pdf
 *.log
-chapter_1.tex
+*.swp
 *kate-swp
+
+chapter_1.tex
