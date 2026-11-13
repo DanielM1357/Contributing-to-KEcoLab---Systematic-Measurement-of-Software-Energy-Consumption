@@ -11,6 +11,7 @@
     \newpage
 
     \tableofcontents
+
     \newpage
 
     \section{About KDE and the KEcoLab project}
@@ -112,7 +113,7 @@
          \item Single page mode: Ctrl+Alt+s
         \end{itemize}
         Also make shure that ydotool is running.
-        The lines until the main for-loop are basically the same as in the idle script. For simulating the usage, a PDF-file is needed. The path of this file is checked during the script at the beginning, and downloaded, if the file is not existing. As the for loop starts, the pdf gets copied to the home directory:
+        The lines until the main for-loop are basically the same as in the idle script. For simulating the usage, a PDF-file is needed. The existance of a testing file is checked during the script at the beginning, and downloaded, if the file is not at the specified path. As the for loop starts, the pdf gets copied to the home directory:
         \begin{lstlisting}
          cp ~/Documents/okular/20yearsofKDE.pdf ~/Documents/20yearsofKDE
         \end{lstlisting}
@@ -169,16 +170,26 @@
 %         \subsubsection{Kate}
 %         \subsubsection{LibreOffice}
 %
-%     \section{Setup Testing Lab}
-%         \subsection{Read documentation of the software energy consumption measurement process}
-%         \subsection{Choose Software and Hardware components and plan the setup}
-%         \subsection{Interfaces between used components}
-%         \subsection{Test the Lab-setup}
-%
-%     \section{Testing software for it's energy consumption}
-%         \subsection{Making actual testruns for each scenario}
-%         \subsection{Process the collected data}
-%
+    \section{Testing software by setting up a Lab}
+
+    To do own measurements on programm's energy consumption, a new testing Lab will be set up. As far as possible, the criteria of Blue Angel are followed, but due to the range of this project, it is not possible to arrange every point of the needed circumstances.
+    In the following chapter the whole measuring process will be described, as well as which tech-stack and software is needed. The main goal is to show the differences of energy consumption between programs.
+
+
+        \subsection{Requirements to the lab setup}
+        First, to measure the energy consumption of anything, a power meter is needed. This will be provided by the school and is of the brand Sirius. The device which is recommended by Blue Angel is the 'Gude Expert Power Control 1202 Series'. The power meter should at least do one measurement per second and also create additional system logs with timestamps. To create these logs, the recommended tool is 'Collectctl'. This tool logs system relevant data, like RAM usage, CPU loading, or network status (Blauer Engel, S. 36).
+        The next part is a PC as Data Aggregator and Evaluator is needed, which collects and processes the data from the power meter. The recommended power meter of Blue Angel can be used with a Python script, to read out the measurement. The device used for this lab comes with it's own proprietary software. Using this would cross the ethical principles of KDE, as it is no free open source software. Due to this the open source solution 'openDAQ' will be used, which can receive data through C++, Python and
+
+        \subsection{Software to perform test measurements}
+
+
+        \subsection{Interfaces between used components}
+        \subsection{Test the Lab-setup}
+
+    \section{Testing software for it's energy consumption}
+        \subsection{Making actual testruns for each scenario}
+        \subsection{Process the collected data}
+
 %     \section{Evaluation}
 %         \subsection{Evaluation of the testing scripts}
 %         \subsection{Evaluation of the measurement results}

@@ -4,9 +4,12 @@ examples/
 test/
 
 *.aux
+*.gz
 *.pdf
 *.log
 *.swp
+*.toc
+
 *kate-swp
 
 chapter_1.tex
