@@ -1,0 +1,28 @@
+% Color palett ----------------------------------------------------------------
+\definecolor{Background}{HTML}{f0ede7}  % Main background
+\definecolor{Text}{HTML}{383830}        % Base text / identifiers
+\definecolor{Comment}{HTML}{a09d8e}     % Comments
+\definecolor{Keyword}{HTML}{ff1d70}     % Keywords
+\definecolor{String}{HTML}{38cf0b}      % Strings
+\definecolor{Function}{HTML}{66D9EF}    % Functions / Methods
+\definecolor{Number}{HTML}{8c4351}      % Numbers / Constants
+\definecolor{Operator}{HTML}{005af0}    % Operators (cyan/blue
+\definecolor{LineNum}{HTML}{3d3e44}     % Line numbers
+
+% Define codeblock style ------------------------------------------------------
+\lstdefinestyle{monokai_light}{
+    backgroundcolor=\color{Background},
+    basicstyle=\color{Text}\ttfamily\small,
+    commentstyle=\color{Comment}\slshape,
+    keywordstyle=\color{Keyword}\bfseries,
+    stringstyle=\color{String},
+    identifierstyle=\color{Text},
+    numberstyle=\color{Number}\tiny,
+    rulecolor=\color{Comment},
+    gobble=4,
+    breaklines=true,
+    tabsize=4,
+    showstringspaces=false
+}
+
+\lstset{style=monokai_light}

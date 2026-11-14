@@ -1,0 +1,36 @@
+\documentclass[12pt, a4paper]{report}
+
+% import packages and custom files
+\usepackage{graphicx} % Including images
+\usepackage{listings} % Code blocks
+\usepackage{tabularx} % For better tables
+\usepackage{xcolor} % Syntax highlight colors
+\usepackage{inconsolata} % Modern monospace font
+
+% Loads syntac highlighting (Tokyo Night Light)
+\input{extras/styling.tex}
+
+\begin{document}
+
+\title{Contributing to KDEEcoLab - Systematic Measurement of Software Energy Consumption}
+\author{Daniel Mandl, Viktor Barath}
+% turn off pagenumbering
+\pagenumbering{gobble}
+\maketitle
+\newpage
+
+\tableofcontents
+
+\newpage
+
+% Include individual chapters
+\input{chapters/01_introduction.tex}
+\input{chapters/02_project_familiarization.tex}
+\input{chapters/03_selenium.tex}
+\input{chapters/04_lab_setup.tex}
+\input{chapters/05_testing_energy_consumption.tex}
+\input{chapters/06_appendix.tex}
+\input{chapters/timeline_and_scedule.tex}
+\input{extras/test_code.tex}
+
+\end{document}

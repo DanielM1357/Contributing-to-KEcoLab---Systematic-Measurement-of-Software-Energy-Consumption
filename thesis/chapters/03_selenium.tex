@@ -1,0 +1,137 @@
+\chapter{Selenium}
+    \section{Why Selenium?}
+    \textbf{What are the benefits compared to the actual scripts? 
+    Would there be other solutions/frameworks? Etc...}
+
+    \section{Setting up Selenium}
+    As Selenium is designed to work and test within web browsers, our setup 
+    needs some extra components.\\
+    Thankfully we already have a solution in the form of KDE's "at-spi" 
+    accessability api.
+
+    \subsection{Overwiew}
+    \textbf{Selenium} A Browser automation framework.\\
+    \textbf{Driver} The server component of Selenium.\\
+    \textbf{Appium} An extension to Selenium making it more useful for app 
+    testing.\\
+    \textbf{AT-SPI2} A protocol over DBus, which GUI toolkit widgets use to 
+    provide their content to screen readers.\\
+
+    \subsection{Installing Dependencies}
+    Some or most of the following packages might already been installed on 
+    the fedora distro, but to make sure, we will run the install commands 
+    through our package manger.
+    \begin{itemize}
+        \item a supported Python3 version
+        \item at-spi2
+        \item pyatspi2
+        \item accerciser
+        \item gobject-introspection
+    \end{itemize}
+    We are gonna install these and other dependencies through our package 
+    manager ("DNF" on fedora):
+    \begin{lstlisting}[language=bash, gobble=8]
+        sudo dnf install \
+        at-spi2-core \
+        accerciser \
+        gobject-introspection \
+        python3 \
+        python3-pip \
+        python3-pyatspi \
+        python3-gobject \
+        at-spi2-core \
+        accerciser \
+        cairo-devel
+    \end{lstlisting}
+    Additionally we ar going to need to install the following packages:
+    \begin{lstlisting}[language=bash, gobble=8]
+        sudo dnf install gcc \
+        gobject-introspection-devel \
+        cairo-gobject-devel \
+        pkg-config python3-devel \
+        gtk4
+    \end{lstlisting}
+    Including the following in order to be able to build 
+    "selenium-webdriver-at-spi" in the following steps.
+    \begin{lstlisting}[language=bash, gobble=8]
+        sudo dnf install \
+        extra-cmake-modules \
+        qt6-qtbase-devel \
+        qt6-qtbase-private-devel \
+        qt6-qtdeclarative-devel \
+        kf6-kwindowsystem-devel \
+        plasma-wayland-protocols-devel \
+        kwayland-devel \
+        kpipewire-devel \
+        kwin-devel \
+        wayland-devel \
+        ruby
+    \end{lstlisting}
+    Once we have these packages installed we are now ready to clone and 
+    install selenium.
+
+    \subsection{Installing Selenium-webdriver-AT-SPI}
+    \begin{lstlisting}[language=bash, gobble=8]
+        git clone https://invent.kde.org/sdk/selenium-webdriver-at-spi.git
+        cd selenium-webdriver-at-spi
+        # For virtual environment
+        python3 -m venv --system-site-packages venv
+        source venv/bin/activate
+        pip3 install -r requirements.txt
+        echo export PATH="~/.local/bin:$PATH" >> ${HOME}/.bashrc
+        mkdir build
+        cd build
+        cmake ..
+        make
+        sudo make install
+        cd ..
+    \end{lstlisting}
+    Now that Selenium is built, it can be used to run the Selenium-specific test.
+
+    \subsection{Running Selenium Tests}
+    If we are running our tests inside a VM -- which we do when working 
+    with the scripts locally --, we make sure to set it up properly.\\
+    In this case we are using QEMU/KVM Virtual Machine Manager.\\
+
+    In the VM's settings, we go to the video tab and make sure 
+    the Mode is set to Virtio and that 3D acceleration is checked.\\
+    Then under Display Spice we need to make sure OpenGL is checked and 
+    listen type is set to None.\\
+
+    Now that the VM is set up and after rebooting the guest machine, we 
+    will be able to run the Selenium tests.
+    In order to test if it works we can run the example test by using the 
+    following command from the selenium folder.
+
+    \begin{lstlisting}[language=bash, gobble=8]
+        selenium-webdriver-at-spi-run ./examples/calculatortest.py
+    \end{lstlisting}
+    If everything is working correctly, a window will open in which the 
+    KCalc app will open and the test will run.
+
+    \subsection{Using already existing Selenium scripts}
+    Given an KDE-repository containing Selenium tests scripts for KDE Linux with OpenQA, it will be checked, if these scripts are of any further use for the current project.
+    The repository https://invent.kde.org/kde-linux/os-autoinst-distri-kdelinux/-/tree/master/tests has the following structure:
+    \begin{lstlisting}[language=bash, gobble=8]
+        tests/
+        common/
+        kdelinux/
+        kdelinux-live/
+    \end{lstlisting}
+    Each folder contains tests for different cases. The repository defines three test suites:
+    \begin{itemize}
+        \item install-system
+        \item upgrade-system
+        \item sanity-test
+    \end{itemize}
+    Each test-suite contains multiple tests, but most of them are for the os, like for example booting the system.
+    Though in 'kdelinux/app/' there are some scripts, which could be useful for this work.
+    First there is 'firefox.py':
+
+    \begin{itemize}
+        \item shebang, chmod u+x firefox.py
+        \item create venv, install unittest-xml-reporting
+        \item copy lib folder to where the script lies (!!find workaround!!)
+    \end{itemize}
+
+    Follow steps from \#\# Run tests locally - install podman-compose
