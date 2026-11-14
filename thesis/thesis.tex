@@ -1,6 +1,9 @@
 \documentclass{article}
+
+% packages
 \usepackage{listings}
 \usepackage{graphicx}
+\usepackage{hyperref} % for linking sections in text
 
 \title{Contributing to KDEEcoLab - Systematic Measurement of Software Energy Consumption}
 
@@ -186,7 +189,7 @@
         \includegraphics[width=10cm]{../img/sec3_lab-setup_modified.png}
         \end{figure}
 
-        \subsubsection{Power meter}
+        \subsubsection{Power meter}\label{power meter}
         First, to measure the energy consumption of anything, a power meter is needed. This will be provided by the school and is of the brand Sirius. The device which is recommended by Blue Angel is the 'Gude Expert Power Control 1202 Series'. The power meter should at least do one measurement per second and also create additional system logs with timestamps. To create these logs, the recommended tool is 'Collectctl'. This tool logs system relevant data, like RAM usage, CPU loading, or network status (Blauer Engel, S. 36).
         The data, which is collected, has to be stored in CSV format. One of the benefits is, that KDE's 'LabPlot' can process the CSV data live to output the data. Still, the main reason for storing the data into CSV is, that the analysis tool OSCAR, which is provided by the Campus Birkenfeld, needs this format (KDE Eco Handbook).
         \subsubsection{Data Aggregator and Evaluator}
@@ -203,6 +206,15 @@
         \end{itemize}
 
 
+        \subsection{Measuring Process}
+        As already mentioned in \ref{power meter} the analysing tool, which will be used, is OSCAR from Campus Birkenfeld. The program takes three files as input and outputs a report, where the most important information is summarised in format of a pdf file. OSCAR is realised in a web application, which can be found online on: 'link'. If the measurement data is inserted there, a report will be generated automatically for each measurement. One part of an example report of the FEEP repository of KDE to illustrate how the report is going to look:
+
+        \begin{figure}[h]
+        \centering
+        \includegraphics[width=10cm]{../img/OSCAR_example.png}
+        \end{figure}
+
+        As shown in the graphic, the power consumption is needed in watts, further OSCAR needs information about CPU, RAM and networing status, what is the reason why 'Collectctl' is used during the emasurement.
 
 
 
@@ -216,6 +228,7 @@
     \section{Appendix}
 
 %     Image 1 - https:\/\/eco.kde.org/be4foss-handbook/images/sec3$_$lab-setup$_$modified.png
+%     Image 2 - https://invent.kde.org/teams/eco/feep/-/blob/master/measurements/okular/2022-09-22/Bericht%20OSCAR%20Standardnutzungsszenario.pdf
 
 %     \section{Evaluation}
 %         \subsection{Evaluation of the testing scripts}
