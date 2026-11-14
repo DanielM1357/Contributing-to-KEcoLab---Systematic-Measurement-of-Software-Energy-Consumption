@@ -1,8 +1,15 @@
+# JS
+node_modules/
+build/
+examples/
+test/
+
 # BUild artifacts
 *.aux
 *.log
 *.toc
 *.out
+*.swp
 
 # Tool files
 *.fdb_latexmk
@@ -10,6 +17,8 @@
 *.synctex.gz
 
 chapter_1.tex
+
+# Editor specifik files
 *kate-swp
 
 *.pdf
