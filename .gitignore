@@ -1,4 +1,3 @@
-# JS
 node_modules/
 build/
 examples/
@@ -20,5 +19,6 @@ chapter_1.tex
 
 # Editor specifik files
 *kate-swp
+.vscode
 
 *.pdf
