@@ -1,15 +1,15 @@
 \chapter{Selenium}
-    \section{Why Selenium?}
+\section{Why Selenium?}
     \textbf{What are the benefits compared to the actual scripts? 
     Would there be other solutions/frameworks? Etc...}
 
-    \section{Setting up Selenium}
+\section{Setting up Selenium}
     As Selenium is designed to work and test within web browsers, our setup 
     needs some extra components.\\
     Thankfully we already have a solution in the form of KDE's "at-spi" 
     accessability api.
 
-    \subsection{Overwiew}
+\subsection{Overwiew}
     \textbf{Selenium} A Browser automation framework.\\
     \textbf{Driver} The server component of Selenium.\\
     \textbf{Appium} An extension to Selenium making it more useful for app 
@@ -17,7 +17,7 @@
     \textbf{AT-SPI2} A protocol over DBus, which GUI toolkit widgets use to 
     provide their content to screen readers.\\
 
-    \subsection{Installing Dependencies}
+\subsection{Installing Dependencies}
     Some or most of the following packages might already been installed on 
     the fedora distro, but to make sure, we will run the install commands 
     through our package manger.
@@ -70,7 +70,7 @@
     Once we have these packages installed we are now ready to clone and 
     install selenium.
 
-    \subsection{Installing Selenium-webdriver-AT-SPI}
+\subsection{Installing Selenium-webdriver-AT-SPI}
     \begin{lstlisting}[language=bash, gobble=8]
         git clone https://invent.kde.org/sdk/selenium-webdriver-at-spi.git
         cd selenium-webdriver-at-spi
@@ -88,7 +88,7 @@
     \end{lstlisting}
     Now that Selenium is built, it can be used to run the Selenium-specific test.
 
-    \subsection{Running Selenium Tests}
+\subsection{Running the repository's example testing-script}\label{test script}
     If we are running our tests inside a VM -- which we do when working 
     with the scripts locally --, we make sure to set it up properly.\\
     In this case we are using QEMU/KVM Virtual Machine Manager.\\
@@ -107,10 +107,11 @@
         selenium-webdriver-at-spi-run ./examples/calculatortest.py
     \end{lstlisting}
     If everything is working correctly, a window will open in which the 
-    KCalc app will open and the test will run.
+    KCalc app will open and the test will run. The output in the console will show if the test ran successfully, if there have been any issues with the tests or if there is any error.
 
-    \subsection{Using already existing Selenium scripts}
-    Given an KDE-repository containing Selenium tests scripts for KDE Linux with OpenQA, it will be checked, if these scripts are of any further use for the current project.
+
+\section{Evaluation of existing ressources from KDE}
+    Given a KDE-repository containing Selenium tests scripts for KDE Linux, it will be checked, if these scripts are of any further use for the current project. (TODO: openQA)
     The repository https://invent.kde.org/kde-linux/os-autoinst-distri-kdelinux/-/tree/master/tests has the following structure:
     \begin{lstlisting}[language=bash, gobble=8]
         tests/
@@ -124,8 +125,19 @@
         \item upgrade-system
         \item sanity-test
     \end{itemize}
-    Each test-suite contains multiple tests, but most of them are for the os, like for example booting the system.
-    Though in 'kdelinux/app/' there are some scripts, which could be useful for this work.
+    Each test-suite contains multiple tests, but most of them are for the os, for example booting the system.
+    Though in 'kdelinux/app/' there are some scripts, which could be useful for this work. As the scripts are based on another logic combined with openQA, there are some further steps to be done to be able to run the scripts.
+    The openqa repository has a folder called 'lib' which has to be inside of the current working project. Also of course the desired scripts have to be copied to the root project.
+    Setup a virtual environment and install 'unittest-xml-reporting' via pip. For the tests output create a folder and give it all rights:
+    \begin{lstlisting}[language=bash, gobble=8]
+        mkdir -p /var/log/kde-linux-openqa
+        chmod 777 /var/log/kde-linux-openqa
+    \end{lstlisting}
+    After doing that, the test script can be run (almost the same as in \ref{test script}) with the following command:
+    \begin{lstlisting}[language=bash, gobble=8]
+        selenium-webdriver-at-spi-run python3 /<path>/<test-name>.py
+    \end{lstlisting}
+
     First there is 'firefox.py':
 
     \begin{itemize}
