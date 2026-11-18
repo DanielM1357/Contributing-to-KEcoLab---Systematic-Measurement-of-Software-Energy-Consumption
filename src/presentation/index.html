@@ -19,9 +19,7 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-				<section data-markdown data-background-color="#212529">
+				<!-- <section data-markdown data-background-color="#212529">
 					<textarea data-template>
 					< < < / / / > > >
 
@@ -37,6 +35,166 @@
 					}
 					```
 					</textarea>
+				</section > -->
+				<section data-markdown data-background-color="#212529">
+					## Contributing to KEcoLab
+					#### Systematic Measurement of Software Energy Consumption
+				</section>
+				<section data-markdown data-background-color="#212529">
+					Our goal is to measure software energy consumption with the use of automated tests, that mimic user behavior.
+
+					Further more to collaborate with the KecoLab team, help them transfare their current test scripts to selenium.
+
+					Contribute to their project.
+				</section>
+				<section data-markdown data-background-color="#212529">
+					### Selenium
+
+					* Is a web browser automation tool and library
+					* Can simulate user behavior
+					* Multy browser and cross-platform support
+					* Supports multiple programming languages (amongst other, Python)
+
+				</section>
+				<section data-markdown data-background-color="#212529">
+					### Selenium WebDriver
+
+					* Core architecture that bridges the programming 
+						language and the web browser
+					* Communication happens through standerdized protocol 
+						(W3C WebDriver Protocol)
+				</section>
+				<section data-markdown data-background-color="#212529">
+					### Appium
+
+					* Is an open source, cross-platform automation framework
+					* Built on top of the WebDriver protocol
+					* Selenium is designed to control web browsers
+					* Appium extends that allowing testing multiple platforms 
+						(mobile apps, hybrid apps, **desktorp applications**)
+				</section>
+				<section data-markdown data-background-color="#212529">
+					### AT-SPI
+					*Assistive Technologies Service Provider Interface*
+
+					* Standard framework used in Linux desktop environments (GNOME, KDE etc.)
+					* Exposes UI elements to external programs
+					* Originally built for accessability programs like screen readers, 
+						screen magnifiers
+				</section>
+				<section data-markdown data-background-color="#212529">
+					### Current Scripts
+
+					* Curently there are a couple of test scripts written in bash 
+					(okular, kate, libre office)
+					* There are three main scenarios
+						* basline
+						* idle
+						* sus (Standard Usage Scenario)
+				</section>
+				<section data-markdown data-background-color="#212529">
+					SUS - Standard Usage Scenario example:
+					...
+
+					```bash
+					# time: 3-4s
+					# NOTE not in xdotool script
+					# Toggle to single page mode
+					echo " Single page mode"
+					startAction "$i" "Single page mode"
+					# Keypress Ctrl+Alt+s
+					ydotool key 29:1 56:1 31:1 29:0 56:0 31:0
+					syncUp 1
+					stopAction "$i"
+
+					# time: 4-5s
+					# Fit width
+					echo " Fit Width "
+					startAction "$i" "Fit Width"
+					# Keypress Ctrl+Shift+w
+					ydotool key 29:1 42:1 17:1 29:0 42:0 17:0
+					syncUp 1
+					stopAction "$i"
+
+					# time: 5-6s
+					# Enter page number 38 and jump there
+					echo " Open Go to dialogue and type 38 "
+					startAction "$i" "Open Go to dialogue"
+					# Keypress Ctrl+g
+					ydotool key 29:1 34:1 29:0 34:0
+					syncUp 1
+					stopAction "$i"
+
+					...
+
+					```
+				</section>
+				<section data-markdown data-background-color="#212529">
+					### Current Scripts
+
+					* Need external tools like kdotool, ydotool
+					* Reliant on UI scale, UI element positions for clicking buttons etc.
+				</section>
+				<section data-markdown data-background-color="#212529">
+					### Test Scripts Using Selenium
+
+					* More inline with KDE's QA tests
+					* No need for exact UI scale, position
+					* Works with AT-SPI to get the nam, or description of UI elements
+				</section>
+				<section data-markdown data-background-color="#212529">
+					Selenium test written in python
+					```Python
+
+					class SimpleCalculatorTests(unittest.TestCase):
+
+						@classmethod
+						def setUpClass(self):
+							options = AppiumOptions()
+							options.set_capability("app", "org.kde.kcalc.desktop")
+							self.driver = webdriver.Remote(command_executor="http://127.0.0.1:4723", options=options)
+							self.driver.implicitly_wait = 10
+
+						@classmethod
+						def tearDownClass(self):
+							# Make sure to terminate the driver again, lest it dangles.
+							self.driver.quit()
+
+						def setUp(self):
+							self.driver.find_element(by=AppiumBy.NAME, value="All clear").click()
+							wait = WebDriverWait(self.driver, 20)
+							wait.until(lambda x: self.getresults() == "")  # Result Display still shows nothing
+
+						def getresults(self):
+							displaytext = self.driver.find_element(by="description", value="Result Display").text
+							return displaytext
+
+						def assertResult(self, expected):
+							wait = WebDriverWait(self.driver, 20)
+							try:
+								wait.until(lambda x: self.getresults() == expected)
+							except selenium.common.exceptions.TimeoutException:
+								pass
+							actual = self.getresults()
+							self.assertEqual(actual, expected)
+
+						def test_initialize(self):
+							self.driver.find_element(by=AppiumBy.NAME, value="All clear").click()
+							self.driver.find_element(by=AppiumBy.NAME, value="Seven").click()
+							self.assertResult("")  # Result Display (unlike input display) still shows nothing
+
+						def test_addition(self):
+							self.driver.find_element(by=AppiumBy.NAME, value="One").click()
+							self.driver.find_element(by=AppiumBy.NAME, value="Add").click()
+							self.driver.find_element(by=AppiumBy.NAME, value="Seven").click()
+							self.assertResult("8")
+
+							...
+
+					```
+				</section>
+				<section data-markdown data-background-color="#212529">
+					
 				</section>
 			</div>
 		</div>
