@@ -1,5 +1,8 @@
 node_modules/
+# dts-paths.ts is required to run vite
+# for now excluding it from rules
 build/
+!src/presentation/build
 examples/
 test/
 
