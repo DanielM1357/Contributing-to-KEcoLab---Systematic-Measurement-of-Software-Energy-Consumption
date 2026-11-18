@@ -1,25 +1,25 @@
 \chapter{Selenium}
 \section{Why Selenium?}
-    \textbf{What are the benefits compared to the actual scripts? 
+    \textbf{What are the benefits compared to the actual scripts?
     Would there be other solutions/frameworks? Etc...}
 
 \section{Setting up Selenium}
-    As Selenium is designed to work and test within web browsers, our setup 
+    As Selenium is designed to work and test within web browsers, our setup
     needs some extra components.\\
-    Thankfully we already have a solution in the form of KDE's "at-spi" 
+    Thankfully we already have a solution in the form of KDE's "at-spi"
     accessability api.
 
 \subsection{Overwiew}
     \textbf{Selenium} A Browser automation framework.\\
     \textbf{Driver} The server component of Selenium.\\
-    \textbf{Appium} An extension to Selenium making it more useful for app 
+    \textbf{Appium} An extension to Selenium making it more useful for app
     testing.\\
-    \textbf{AT-SPI2} A protocol over DBus, which GUI toolkit widgets use to 
+    \textbf{AT-SPI2} A protocol over DBus, which GUI toolkit widgets use to
     provide their content to screen readers.\\
 
 \subsection{Installing Dependencies}
-    Some or most of the following packages might already been installed on 
-    the fedora distro, but to make sure, we will run the install commands 
+    Some or most of the following packages might already been installed on
+    the fedora distro, but to make sure, we will run the install commands
     through our package manger.
     \begin{itemize}
         \item a supported Python3 version
@@ -28,7 +28,7 @@
         \item accerciser
         \item gobject-introspection
     \end{itemize}
-    We are gonna install these and other dependencies through our package 
+    We are gonna install these and other dependencies through our package
     manager ("DNF" on fedora):
     \begin{lstlisting}[language=bash, gobble=8]
         sudo dnf install \
@@ -51,7 +51,7 @@
         pkg-config python3-devel \
         gtk4
     \end{lstlisting}
-    Including the following in order to be able to build 
+    Including the following in order to be able to build
     "selenium-webdriver-at-spi" in the following steps.
     \begin{lstlisting}[language=bash, gobble=8]
         sudo dnf install \
@@ -67,7 +67,7 @@
         wayland-devel \
         ruby
     \end{lstlisting}
-    Once we have these packages installed we are now ready to clone and 
+    Once we have these packages installed we are now ready to clone and
     install selenium.
 
 \subsection{Installing Selenium-webdriver-AT-SPI}
@@ -89,29 +89,29 @@
     Now that Selenium is built, it can be used to run the Selenium-specific test.
 
 \subsection{Running the repository's example testing-script}\label{test script}
-    If we are running our tests inside a VM -- which we do when working 
+    If we are running our tests inside a VM -- which we do when working
     with the scripts locally --, we make sure to set it up properly.\\
     In this case we are using QEMU/KVM Virtual Machine Manager.\\
 
-    In the VM's settings, we go to the video tab and make sure 
+    In the VM's settings, we go to the video tab and make sure
     the Mode is set to Virtio and that 3D acceleration is checked.\\
-    Then under Display Spice we need to make sure OpenGL is checked and 
+    Then under Display Spice we need to make sure OpenGL is checked and
     listen type is set to None.\\
 
-    Now that the VM is set up and after rebooting the guest machine, we 
+    Now that the VM is set up and after rebooting the guest machine, we
     will be able to run the Selenium tests.
-    In order to test if it works we can run the example test by using the 
+    In order to test if it works we can run the example test by using the
     following command from the selenium folder.
 
     \begin{lstlisting}[language=bash, gobble=8]
         selenium-webdriver-at-spi-run ./examples/calculatortest.py
     \end{lstlisting}
-    If everything is working correctly, a window will open in which the 
+    If everything is working correctly, a window will open in which the
     KCalc app will open and the test will run. The output in the console will show if the test ran successfully, if there have been any issues with the tests or if there is any error.
 
 
 \section{Evaluation of existing ressources from KDE}
-    Given a KDE-repository containing Selenium tests scripts for KDE Linux, it will be checked, if these scripts are of any further use for the current project. (TODO: openQA)
+    Given a KDE-repository containing Selenium tests scripts for KDE Linux, it will be checked, if these scripts are of any further use for the current project. Also this is a good option to learn how to write new scripts. (TODO: openQA)
     The repository https://invent.kde.org/kde-linux/os-autoinst-distri-kdelinux/-/tree/master/tests has the following structure:
     \begin{lstlisting}[language=bash, gobble=8]
         tests/
@@ -125,10 +125,14 @@
         \item upgrade-system
         \item sanity-test
     \end{itemize}
-    Each test-suite contains multiple tests, but most of them are for the os, for example booting the system.
-    Though in 'kdelinux/app/' there are some scripts, which could be useful for this work. As the scripts are based on another logic combined with openQA, there are some further steps to be done to be able to run the scripts.
-    The openqa repository has a folder called 'lib' which has to be inside of the current working project. Also of course the desired scripts have to be copied to the root project.
-    Setup a virtual environment and install 'unittest-xml-reporting' via pip. For the tests output create a folder and give it all rights:
+    Further each test-suite contains multiple tests, but most of them are for the os, for example booting the system.
+    Though in 'kdelinux/app/' there are some scripts, which could be useful for this work. As the scripts are based on another logic combined with openQA, there are some further steps to be done to be able to run the scripts:
+    \begin{itemize}
+     \item the repository contains a python library called 'lib' which has to be inside of the working project
+     \item setup a venv and install 'unittest-xml-reporting' via pip
+    \end{itemize}
+
+    For the tests output create a folder and give it all rights:
     \begin{lstlisting}[language=bash, gobble=8]
         mkdir -p /var/log/kde-linux-openqa
         chmod 777 /var/log/kde-linux-openqa
@@ -138,12 +142,12 @@
         selenium-webdriver-at-spi-run python3 /<path>/<test-name>.py
     \end{lstlisting}
 
-    First there is 'firefox.py':
+    \subsection{Running the tests}
+    Now a few examples will be worked through, to test, which scripts are working. First the script 'dolphin.py' will be tested, which is run from the project's root by:
+    \begin{lstlisting}[language=bash, gobble=8]
+     selenium-webdriver-at-spi-run python3 dolphin/dolphin.py
+    \end{lstlisting}
 
-    \begin{itemize}
-        \item shebang, chmod u+x firefox.py
-        \item create venv, install unittest-xml-reporting
-        \item copy lib folder to where the script lies (!!find workaround!!)
-    \end{itemize}
+    Next dolphin
 
-    Follow steps from \#\# Run tests locally - install podman-compose
+
