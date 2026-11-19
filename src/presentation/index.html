@@ -21,44 +21,52 @@
 	</head>
 	<body>
 		<div class="reveal">
+				<img class="logo" src="assets/KDE-eco-logo-only.svg">
 			<div class="slides">
 
-				<img class="logo" src="assets/KDE-eco-logo-only.svg">
+				<!-- <img class="logo" src="assets/KDE-eco-logo-only.svg"> -->
 
 				<section data-markdown id="beginning">
 					<textarea data-template>
 					## Contributing to KEcoLab
 
 					#### Systematic Measurement of Software Energy Consumption
+					<img class="logo_page1" src="assets/KDE-eco-logo-only.svg">
 					</textarea>
 				</section>
 
 
 				<section data-markdown>
+					<textarea data-template>
 					Our goal is to measure software energy consumption with the use of automated tests, that mimic user behavior.
 
 					Further more to collaborate with the KecoLab team, help them transfare their current test scripts to selenium.
 
 					Contribute to their project.
+					</textarea>
 				</section>
 				<section data-markdown>
+					<textarea data-template>
 					### Selenium
 
 					* Is a web browser automation tool and library
 					* Can simulate user behavior
 					* Multy browser and cross-platform support
 					* Supports multiple programming languages (amongst other, Python)
-
+					</textarea>
 				</section>
 				<section data-markdown>
+					<textarea data-template>
 					### Selenium WebDriver
 
 					* Core architecture that bridges the programming 
 						language and the web browser
 					* Communication happens through standerdized protocol 
 						(W3C WebDriver Protocol)
+					</textarea>
 				</section>
 				<section data-markdown>
+					<textarea data-template>
 					### Appium
 
 					* Is an open source, cross-platform automation framework
@@ -66,8 +74,10 @@
 					* Selenium is designed to control web browsers
 					* Appium extends that allowing testing multiple platforms 
 						(mobile apps, hybrid apps, **desktorp applications**)
+					</textarea>
 				</section>
 				<section data-markdown>
+					<textarea data-template>
 					### AT-SPI
 					*Assistive Technologies Service Provider Interface*
 
@@ -75,8 +85,10 @@
 					* Exposes UI elements to external programs
 					* Originally built for accessability programs like screen readers, 
 						screen magnifiers
+					</textarea>
 				</section>
 				<section data-markdown>
+					<textarea data-template>
 					### Current Scripts
 
 					* Curently there are a couple of test scripts written in bash 
@@ -85,8 +97,10 @@
 						* basline
 						* idle
 						* sus (Standard Usage Scenario)
+					</textarea>
 				</section>
 				<section data-markdown>
+					<textarea data-template>
 					SUS - Standard Usage Scenario example:
 					...
 
@@ -122,21 +136,27 @@
 					...
 
 					```
+					</textarea>
 				</section>
 				<section data-markdown>
+					<textarea data-template>
 					### Current Scripts
 
 					* Need external tools like kdotool, ydotool
 					* Reliant on UI scale, UI element positions for clicking buttons etc.
+					</textarea>
 				</section>
 				<section data-markdown>
+					<textarea data-template>
 					### Test Scripts Using Selenium
 
 					* More inline with KDE's QA tests
 					* No need for exact UI scale, position
 					* Works with AT-SPI to get the nam, or description of UI elements
+					</textarea>
 				</section>
 				<section data-markdown>
+					<textarea data-template>
 					Selenium test written in python
 					```Python
 
@@ -186,6 +206,7 @@
 							...
 
 					```
+					</textarea>
 				</section>
 				<section data-markdown>
 					
