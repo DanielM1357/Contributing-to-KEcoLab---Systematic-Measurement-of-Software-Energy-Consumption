@@ -208,8 +208,53 @@
 					```
 					</textarea>
 				</section>
+
+				<section>
+					<section>
+						<h3>Setting up our own testing Lab</h3>
+						<img src="/assets/sec3_lab-setup_modified.png" width="623" height="342">
+					</section>
+					<section data-markdown>
+					<textarea data-template>
+						### Power meter
+						* Measures energy consumption
+						* Min. 1 measurement per second
+						* Target output format - csv
+					</textarea>
+					</section>
+					<section data-markdown>
+					<textarea data-template>
+						#### Data Aggregator and Evaluator(DAE)
+						* Computer to read data from power meter
+						* OpenDAQ to connect to the power meter
+					</textarea>
+					</section>
+					<section data-markdown>
+					<textarea data-template>
+						#### System Under Test (SUT)
+						* System(s) where Selenium scripts are executed on
+						* Must be an older PC
+						* Collectcl to collect system data (RAM, CPU, Network)
+						* No sideprocesses allowed
+					</textarea>
+					</section>
+					<section >
+						<h3>Results into</h3>
+						<img src="/assets/OSCAR_example.png">
+						<p style="font-size:30px;">Example of the measuerement results of a past measurement - Made with OSCAR tool from Campus Birkenfeld</p>
+					</section>
+				</section>
 				<section data-markdown>
-					
+				## Project management
+
+				**SCRUM**
+
+				- agile
+				- close cooperation with the KDE Eco team
+				- weekly meetings - sprints
+
+
+				[Roadmap](https://github.com/DanielM1357/Contributing-to-KEcoLab---Systematic-Measurement-of-Software-Energy-Consumption/milestones?sort=due_date&direction=asc) <!-- .element: style="color:#8bcf2d;font-size:30px;" -->
 				</section>
 			</div>
 		</div>
@@ -224,6 +269,8 @@
 			// - https://revealjs.com/config/
 			Reveal.initialize({
 				hash: true,
+
+				mouseWheel: true,
 
 				// Learn about plugins: https://revealjs.com/plugins/
 				plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
