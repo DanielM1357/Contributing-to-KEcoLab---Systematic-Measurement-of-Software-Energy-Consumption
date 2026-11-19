@@ -7,3 +7,10 @@
     z-index: 20;
 }
 
+section > h2, h3 {
+    color: #54A3D8;
+}
+
+h4, p, ul {
+    color: #AFCA0B;
+}
